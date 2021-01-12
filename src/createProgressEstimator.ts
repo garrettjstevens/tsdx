@@ -5,7 +5,8 @@ import { paths } from './constants';
 const progressEstimator = require('progress-estimator');
 
 export async function createProgressEstimator(showProgress = true) {
-  if (!showProgress) {
+  const progress = showProgress && process.stdout.isTTY && !process.env.CI;
+  if (!progress) {
     return (_promise: Promise<any>, message: string) => {
       console.log(message);
     };
